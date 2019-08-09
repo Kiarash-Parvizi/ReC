@@ -1,2 +1,2 @@
 # ReC
-C with namespaces
+Section-Oriented C
