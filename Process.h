@@ -39,7 +39,7 @@ void Read_Change_Write() {
 	char writeSectionRefs = 0;
 	int sideCurlyCount = 0;
 	//
-	int location; char* localPtr;
+	int location; char* localPtr; char* preLocalPtr;
 	//
 	while (fgets(buffer, 128, f) != NULL)
 	{
@@ -56,40 +56,49 @@ void Read_Change_Write() {
 				localPtr = localPtr + location + 2;
 				//fputc('V', outFile);
 			}
-			if (sideCurlyCount > 0)
-			{
+			//if (sideCurlyCount > 0)
+			//{
 				//keyword = this------------------------
 				localPtr = buffer;
 				while ((location = findInStr(localPtr, "this.")) != -1)
 				{
+					preLocalPtr = localPtr;
 					char* prefix = sectionList[activeSection].prefix;
 					replace(localPtr, &localPtr[location], 5, prefix, strlen(prefix));
 					//fputc('V', outFile);
-					localPtr = localPtr + findCInStr(localPtr, ';');
-					if (localPtr == buffer) break;
+					localPtr = localPtr + findCInStr(localPtr, ',');
+					if (localPtr == preLocalPtr) {
+						localPtr = localPtr + findCInStr(localPtr, ';'); if (localPtr == preLocalPtr) break;
+					}
 				}
 				//keyword = root------------------------
 				localPtr = buffer;
 				while ((location = findInStr(localPtr, "root.")) != -1)
 				{
+					preLocalPtr = localPtr;
 					char* prefix = sectionList[activeSection].root;
 					replace(localPtr, &localPtr[location], 5, prefix, strlen(prefix));
 					//fputc('V', outFile);
-					localPtr = localPtr + findCInStr(localPtr, ';');
-					if (localPtr == buffer) break;
+					localPtr = localPtr + findCInStr(localPtr, ',');
+					if (localPtr == preLocalPtr) {
+						localPtr = localPtr + findCInStr(localPtr, ';'); if (localPtr == preLocalPtr) break;
+					}
 				}
 				//keyword = parent------------------------
 				localPtr = buffer;
 				while ((location = findInStr(localPtr, "parent.")) != -1)
 				{
+					preLocalPtr = localPtr;
 					char* prefix = sectionList[activeSection].parent;
 					replace(localPtr, &localPtr[location], 7, prefix, strlen(prefix));
 					//fputc('V', outFile);
-					localPtr = localPtr + findCInStr(localPtr, ';');
-					if (localPtr == buffer) break;
+					localPtr = localPtr + findCInStr(localPtr, ',');
+					if (localPtr == preLocalPtr) {
+						localPtr = localPtr + findCInStr(localPtr, ';'); if (localPtr == preLocalPtr) break;
+					}
 				}
 				//------------------------
-			}
+			//}
 		}
 
 		//Put section refs
