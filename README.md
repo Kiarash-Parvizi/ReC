@@ -16,7 +16,7 @@ gcc -o ReC ReC.c
 ### Usage
 * Add ReC executable directory to your system PATH
 * If you are using windows place the provided ls.exe file in the same location as the ReC.exe
-* Open a new directory and write some ReC Code && save them with .c or .h expension
+* Open a new directory and write some ReC Code && save them with .c or .h extension
 * To convert your code to a version that c compilers can understand run:
 ```
 ReC
