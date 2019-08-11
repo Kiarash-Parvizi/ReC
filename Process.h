@@ -2,6 +2,7 @@
 // Process:
 void Read_Change_Write();
 int sectionNum; strList* rootSections;
+char bufferPub[128];
 
 void Process(strList* fileList) {
 	rootSections = List_Create();
@@ -35,18 +36,15 @@ void Read_Change_Write() {
 	char buffer [128];		char* secPtr; uint curlyPos;
 	char buffer2[128];
 	char sectionName[64];	char rootSecName[64]; sectionNum = 0;
-	char secDepth = 0;		char skipNextRound = 0;
-	char writeSectionRefs = 0;
+	char secDepth = 0;
+	char writeSectionRefs = 0; char writeVarRefs = 0; char inRefCurly = 0;
 	int sideCurlyCount = 0;
 	//
 	int location; char* localPtr; char* preLocalPtr;
 	//
 	while (fgets(buffer, 128, f) != NULL)
 	{
-		//Skip
-		if (skipNextRound) { skipNextRound = 0; continue; }
-
-		//Rec ref keywords {this, root, parent, '::'}
+		//ReC ref keywords {this, root, parent, '::'}
 		{
 			localPtr = buffer;
 			//keyword = '::'------------------------
@@ -65,6 +63,8 @@ void Read_Change_Write() {
 					preLocalPtr = localPtr;
 					char* prefix = sectionList[activeSection].prefix;
 					replace(localPtr, &localPtr[location], 5, prefix, strlen(prefix));
+					//Write Var-Refs:
+					if (sideCurlyCount == 0) writeVarRefs = 1;
 					//fputc('V', outFile);
 					localPtr = localPtr + findCInStr(localPtr, ',');
 					if (localPtr == preLocalPtr) {
@@ -78,6 +78,8 @@ void Read_Change_Write() {
 					preLocalPtr = localPtr;
 					char* prefix = sectionList[activeSection].root;
 					replace(localPtr, &localPtr[location], 5, prefix, strlen(prefix));
+					//Write Var-Refs:
+					if (sideCurlyCount == 0) writeVarRefs = 1;
 					//fputc('V', outFile);
 					localPtr = localPtr + findCInStr(localPtr, ',');
 					if (localPtr == preLocalPtr) {
@@ -91,6 +93,8 @@ void Read_Change_Write() {
 					preLocalPtr = localPtr;
 					char* prefix = sectionList[activeSection].parent;
 					replace(localPtr, &localPtr[location], 7, prefix, strlen(prefix));
+					//Write Var-Refs:
+					if (sideCurlyCount == 0) writeVarRefs = 1;
 					//fputc('V', outFile);
 					localPtr = localPtr + findCInStr(localPtr, ',');
 					if (localPtr == preLocalPtr) {
@@ -106,6 +110,17 @@ void Read_Change_Write() {
 			char b[64]; sprintf(b, "#include\"%s_refs.h\" // %s\n", sectionName, sectionName);
 			fputs(b, outFile);
 			writeSectionRefs = 0;
+		}
+		
+		//Put section Var refs
+		if (writeVarRefs) {
+			fputs(buffer, refsFile);
+			if (findCInStr(buffer, '{')) inRefCurly = 1;
+			if (findCInStr(buffer, '}')) inRefCurly = 0;
+			if (!inRefCurly && findCInStr(buffer, ';')) {
+				writeVarRefs = 0;
+			}
+			continue;
 		}
 
 		//Check For section keyword
@@ -139,7 +154,7 @@ void Read_Change_Write() {
 				}
 				continue;
 			} else {
-				skipNextRound = 1; if (secDepth == 1) writeSectionRefs = 1; continue;
+				printf("\n===> %s\n%s", buffer, err_invalidSection); exit(0);
 			}
 		}
 
@@ -175,3 +190,6 @@ void Read_Change_Write() {
 		fputs(buffer, outFile);
 	}
 }
+
+
+

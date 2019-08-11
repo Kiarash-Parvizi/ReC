@@ -3,6 +3,7 @@
 // Vars:
 char* help_message = "ReC-HELP:\n";
 char* err_invalidFormat1 = "\nERR:\nYour input format is incorrect\nTry using ReC -c=\"compilerPath\" \"filePath\"";
+char* err_invalidSection = "\nERR:\nIncorrect section definition\n_correct pattern: section secName {\n";
 char* compilerPath = "gcc"; char* applicationPath; char* outName;
 
 char mainFuncFound = 0;
