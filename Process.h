@@ -65,11 +65,7 @@ void Read_Change_Write() {
 					replace(localPtr, &localPtr[location], 5, prefix, strlen(prefix));
 					//Write Var-Refs:
 					if (sideCurlyCount == 0) writeVarRefs = 1;
-					//fputc('V', outFile);
-					localPtr = localPtr + findCInStr(localPtr, ',');
-					if (localPtr == preLocalPtr) {
-						localPtr = localPtr + findCInStr(localPtr, ';'); if (localPtr == preLocalPtr) break;
-					}
+					localPtr += 6;
 				}
 				//keyword = root------------------------
 				localPtr = buffer;
@@ -80,11 +76,7 @@ void Read_Change_Write() {
 					replace(localPtr, &localPtr[location], 5, prefix, strlen(prefix));
 					//Write Var-Refs:
 					if (sideCurlyCount == 0) writeVarRefs = 1;
-					//fputc('V', outFile);
-					localPtr = localPtr + findCInStr(localPtr, ',');
-					if (localPtr == preLocalPtr) {
-						localPtr = localPtr + findCInStr(localPtr, ';'); if (localPtr == preLocalPtr) break;
-					}
+					localPtr += 6;
 				}
 				//keyword = parent------------------------
 				localPtr = buffer;
@@ -95,11 +87,7 @@ void Read_Change_Write() {
 					replace(localPtr, &localPtr[location], 7, prefix, strlen(prefix));
 					//Write Var-Refs:
 					if (sideCurlyCount == 0) writeVarRefs = 1;
-					//fputc('V', outFile);
-					localPtr = localPtr + findCInStr(localPtr, ',');
-					if (localPtr == preLocalPtr) {
-						localPtr = localPtr + findCInStr(localPtr, ';'); if (localPtr == preLocalPtr) break;
-					}
+					localPtr += 6;
 				}
 				//------------------------
 			//}
