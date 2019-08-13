@@ -13,7 +13,8 @@ strList* List_Create() {
 void List_ADD(strList* list, char* el) {
 	uint index = list->size; list->size++;
 	list->e = (char**)realloc(list->e, list->size*sizeof(strList));
-	char* memLoc = (char*)malloc(strlen(el));
+	int len = strlen(el);
+	char* memLoc = (char*)malloc(len+1); memLoc[len] = '\0';
 	strcpy(memLoc, el);
 	list->e[index] = memLoc;
 }
