@@ -16,6 +16,7 @@ void Process(strList* fileList) {
 		outName[0] = '\0'; append(&outName, ptext_REC_fslash); append(&outName, fileList->e[i]);
 		//printf("outName: %s\n", outName);
 		outFile = fopen(outName, "w+");
+		printf("-> File: %s\n", outName);
 
 		//Main Process
 		Read_Change_Write();
@@ -44,6 +45,7 @@ void Read_Change_Write() {
 	//
 	while (fgets(buffer, 128, f) != NULL)
 	{
+		printf("*%s\n", buffer);
 		//ReC ref keywords {this, root, parent, '::'}
 		{
 			localPtr = buffer;
@@ -54,8 +56,8 @@ void Read_Change_Write() {
 				localPtr = localPtr + location + 2;
 				//fputc('V', outFile);
 			}
-			//if (sideCurlyCount > 0)
-			//{
+			if (secDepth > 0)
+			{
 				//keyword = this------------------------
 				localPtr = buffer;
 				while ((location = findInStr(localPtr, "this.")) != -1)
@@ -90,7 +92,7 @@ void Read_Change_Write() {
 					localPtr += 6;
 				}
 				//------------------------
-			//}
+			}
 		}
 
 		//Put section refs
@@ -112,7 +114,8 @@ void Read_Change_Write() {
 		}
 
 		//Check For section keyword
-		if ((secPtr = strstr(buffer, "section")) && !strstr(buffer, "struct") && !findCInStr(buffer, '"')
+		if ((secPtr = strstr(buffer, "section")) && secPtr[-1] == ' ' && secPtr[7] == ' '
+			&& !strstr(buffer, "struct") && !findCInStr(buffer, '"')
 			&& !findCInStr(buffer, '/') && !findCInStr(buffer, '*'))
 		{
 			secPtr += 8; if (*(secPtr - 1) != ' ') goto OUT;
