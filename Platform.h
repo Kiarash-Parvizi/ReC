@@ -17,7 +17,7 @@ void Start_GetPlatform() {
 #ifdef _WIN32
 	platform = 'w';
 #else
-	platform = 'u'
+	platform = 'u';
 #endif
 }
 
