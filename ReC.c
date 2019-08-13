@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	printf("New files are saved at ./ReC");
+	printf("New files are saved at ./ReC\n");
 	return 0;
 }
 
