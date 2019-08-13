@@ -16,7 +16,7 @@ void Process(strList* fileList) {
 		outName[0] = '\0'; append(&outName, ptext_REC_fslash); append(&outName, fileList->e[i]);
 		//printf("outName: %s\n", outName);
 		outFile = fopen(outName, "w+");
-		printf("-> File: %s\n", outName);
+		//printf("-> File: %s\n", outName);
 
 		//Main Process
 		Read_Change_Write();
@@ -45,7 +45,7 @@ void Read_Change_Write() {
 	//
 	while (fgets(buffer, 128, f) != NULL)
 	{
-		printf("*%s\n", buffer);
+		//printf("*%s\n", buffer);
 		//ReC ref keywords {this, root, parent, '::'}
 		{
 			localPtr = buffer;
