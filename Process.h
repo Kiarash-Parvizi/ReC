@@ -116,7 +116,7 @@ void Read_Change_Write() {
 		//Check For section keyword
 		if ((secPtr = strstr(buffer, "section")) && secPtr[7] == ' '
 			&& !strstr(buffer, "struct") && !findCInStr(buffer, '"')
-			&& (!findCInStr(buffer, '/') && (findCInStr(buffer, 's') < findCInStr(buffer, '/')))
+			&& ((buffer[0] != '/' && !findCInStr(buffer, '/')) || findCInStr(buffer, 's') < findCInStr(buffer, '/'))
 			&& !findCInStr(buffer, '*'))
 		{
 			secPtr += 8; if (*(secPtr - 1) != ' ') goto OUT;
