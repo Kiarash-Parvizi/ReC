@@ -27,7 +27,7 @@ ReC
 ---
 
 ### ReC example code
-```
+```c
 #include<stdio.h>
 
 section Server {
