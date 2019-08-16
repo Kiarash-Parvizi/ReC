@@ -132,12 +132,12 @@ void Read_Change_Write() {
 						strcpy(rootName, sectionName);
 						List_ADD(rootSections, rootName);
 						// Create refs file:
-						sprintf(temp, "ReC/%s_refs.h\0", rootName);
+						sprintf(temp, "ReC/%s_refs.h", rootName);
 							refsFile = fopen(temp, "w");
 					}
 					else {
 						// Open refs file:
-						sprintf(temp, "ReC/%s_refs.h\0", sectionName);
+						sprintf(temp, "ReC/%s_refs.h", sectionName);
 						refsFile = fopen(temp, "a");
 					}
 					//
@@ -155,7 +155,7 @@ void Read_Change_Write() {
 		{
 			if ((temp_i = findFunctionStart(buffer)) != -1) {
 				char* elName = getElementName(buffer+temp_i);
-				sprintf(temp, "%s%s\0", sectionList[activeSection].prefix, elName);
+				sprintf(temp, "%s%s", sectionList[activeSection].prefix, elName);
 				replace(buffer, buffer+temp_i, strlen(elName), temp, strlen(temp));
 
 				//add to refs.h
