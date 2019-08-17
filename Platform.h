@@ -10,7 +10,7 @@ void Start_CheckForLS() {
 	if (err == 1) {
 		printf("\n------------------------!UNIX\n'ls' command not fount\nPlease place the ls.exe file in the same location as the main executable (ReC.exe) if you are using windows\n------------------------");
 	}
-	printf("---------------------------------------------------------------\n>>Designed by Kiarash Parvizi\n>>For more info run 'ReC help' command\n->Contact me at: cdev.developer@gmail.com\n---------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n>>Designed by Kiarash Parvizi\n>>For more info run 'ReC help'\n->Contact me at: cdev.developer@gmail.com\n---------------------------------------------------------------\n");
 }
 
 void Start_GetPlatform() {
